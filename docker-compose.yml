@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  nominatim:
+    image: mediagis/nominatim:5.0
+    container_name: nominatim
+    ports:
+      - "8080:8080"
+    environment:
+      - PBF_PATH=/nominatim/santa_cruz.osm.pbf  # ruta dentro del contenedor
+      - IMPORT_STYLE=full
+    volumes:
+      - ./santa_cruz.osm.pbf:/nominatim/santa_cruz.osm.pbf  # monta archivo
+      - nominatim-data:/var/lib/postgresql/15/main
+    restart: unless-stopped
+
+volumes:
+  nominatim-data:
